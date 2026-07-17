@@ -10,22 +10,35 @@
   <header class="hero small">
     <div class="hero-inner">
       <h1>Admin — ABHINAV TOOLS AND BOTS</h1>
-      <p class="tag">How to upload files (manual) and add them to the dashboard</p>
+      <p class="tag">Secure admin panel (password-protected). Public dashboard is separate.</p>
     </div>
   </header>
 
   <main class="container docs">
-    <h2>Manual upload (recommended)</h2>
-    <ol>
-      <li>Go to your repository: <code>https://github.com/abhinavkanni6-tech/ABHINAV-TOOLS</code></li>
-      <li>Click Add file → Upload files. Upload your file into the <code>uploads/</code> folder.</li>
-      <li>After upload, click Commit changes.</li>
-      <li>Edit <code>files.json</code> (click it in the repo) and add an entry for your file. See the example below.</li>
-      <li>Save the updated <code>files.json</code>. The dashboard will automatically show the new file.</li>
-    </ol>
+    <div id="login-area">
+      <h2>Admin login</h2>
+      <p>Enter the admin password to access the admin controls.</p>
+      <input id="pw" type="password" placeholder="Admin password" style="padding:.6rem;border-radius:8px;width:100%;max-width:320px;">
+      <div style="height:.5rem"></div>
+      <button id="login-btn" class="btn primary">Log in</button>
+      <div id="login-msg" style="color:#ffb4b4;margin-top:.75rem"></div>
 
-    <h3>files.json example entry</h3>
-    <pre>{
+      <hr style="margin:1.25rem 0;border:none;border-top:1px solid rgba(255,255,255,0.04)">
+
+      <p><strong>Security note:</strong> This password is stored in <code>admin-config.json</code> inside this repository. This is a purely client-side gate and can be bypassed by anyone who inspects or alters the site code in their browser — do not rely on this for strong security. If you want a secure upload flow, ask me to implement the client-side PAT uploader (recommended) or a server-backed solution.</p>
+    </div>
+
+    <div id="admin-area" style="display:none">
+      <h2>Admin controls</h2>
+      <p>Welcome, admin — you can perform the following actions via GitHub (manual) or use the uploader (we can add a PAT-based uploader if you want):</p>
+      <ul>
+        <li>Upload files: Repo → Add file → Upload files. Place files in the <code>uploads/</code> folder.</li>
+        <li>Edit <code>files.json</code>: Add an object describing the uploaded file (see example below).</li>
+        <li>To change the admin password: edit <code>admin-config.json</code> in this repo and replace the <code>password</code> value, then commit.</li>
+      </ul>
+
+      <h3>files.json example entry</h3>
+      <pre>{
   "id": "example-tool-1",
   "filename": "uploads/example-tool.zip",
   "displayName": "Example Tool Pack",
@@ -35,21 +48,54 @@
   "uploader": "admin"
 }</pre>
 
-    <h3>Enable GitHub Pages & custom domain</h3>
-    <ol>
-      <li>Go to Settings → Pages. Choose branch <code>main</code> and folder <code>/ (root)</code>, save.</li>
-      <li>Add the DNS records at your domain registrar (see README.md for exact IPs) and keep the <code>CNAME</code> file in the repo.</li>
-    </ol>
+      <h3>Quick links</h3>
+      <p>
+        <a class="btn ghost" href="https://github.com/abhinavkanni6-tech/ABHINAV-TOOLS" target="_blank" rel="noopener">Open repo on GitHub</a>
+        <a class="btn primary" href="/" style="margin-left:.5rem">Back to dashboard</a>
+      </p>
 
-    <h3>Notes</h3>
-    <ul>
-      <li>Anyone can view and download files from the dashboard. Only repo admins can upload files via GitHub.</li>
-      <li>If you prefer scripted or token-based uploads, we can add an optional client-side uploader that uses a temporary Personal Access Token — contact me to enable.</li>
-    </ul>
+      <div style="margin-top:1rem">
+        <button id="logout-btn" class="btn ghost">Log out</button>
+      </div>
+    </div>
   </main>
 
   <footer class="footer">
     <div><a href="/">Back to dashboard</a></div>
   </footer>
+
+  <script>
+    // Admin password gate (client-side). Password is stored in admin-config.json in the repo root.
+    (function(){
+      const loginBtn = document.getElementById('login-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const pwInput = document.getElementById('pw');
+      const loginMsg = document.getElementById('login-msg');
+      const loginArea = document.getElementById('login-area');
+      const adminArea = document.getElementById('admin-area');
+
+      let configPassword = null;
+
+      // Load admin config
+      fetch('/admin-config.json').then(r=>r.json()).then(cfg=>{
+        configPassword = cfg.password || null;
+      }).catch(err=>{
+        console.error('Failed to load admin-config.json',err);
+        loginMsg.textContent = 'Failed to load admin configuration. Make sure admin-config.json exists.';
+      });
+
+      function showAdmin(){ loginArea.style.display = 'none'; adminArea.style.display = 'block'; }
+      function showLogin(){ adminArea.style.display = 'none'; loginArea.style.display = 'block'; pwInput.value = ''; }
+
+      loginBtn.addEventListener('click', ()=>{
+        if(configPassword === null){ loginMsg.textContent = 'Admin config not loaded yet.'; return; }
+        const v = pwInput.value || '';
+        if(v === configPassword){ showAdmin(); loginMsg.textContent = ''; }
+        else { loginMsg.textContent = 'Incorrect password.'; }
+      });
+
+      logoutBtn.addEventListener('click', ()=>{ showLogin(); });
+    })();
+  </script>
 </body>
 </html>
