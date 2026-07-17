@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — ABHINAV TOOLS AND BOTS</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="hero small">
+    <div class="hero-inner">
+      <h1>Admin — ABHINAV TOOLS AND BOTS</h1>
+      <p class="tag">How to upload files (manual) and add them to the dashboard</p>
+    </div>
+  </header>
+
+  <main class="container docs">
+    <h2>Manual upload (recommended)</h2>
+    <ol>
+      <li>Go to your repository: <code>https://github.com/abhinavkanni6-tech/ABHINAV-TOOLS</code></li>
+      <li>Click Add file → Upload files. Upload your file into the <code>uploads/</code> folder.</li>
+      <li>After upload, click Commit changes.</li>
+      <li>Edit <code>files.json</code> (click it in the repo) and add an entry for your file. See the example below.</li>
+      <li>Save the updated <code>files.json</code>. The dashboard will automatically show the new file.</li>
+    </ol>
+
+    <h3>files.json example entry</h3>
+    <pre>{
+  "id": "example-tool-1",
+  "filename": "uploads/example-tool.zip",
+  "displayName": "Example Tool Pack",
+  "readme": "Short description for the tool. You can use Markdown and basic HTML.",
+  "url": "https://raw.githubusercontent.com/abhinavkanni6-tech/ABHINAV-TOOLS/main/uploads/example-tool.zip",
+  "uploaded_at": "2026-07-17T12:00:00Z",
+  "uploader": "admin"
+}</pre>
+
+    <h3>Enable GitHub Pages & custom domain</h3>
+    <ol>
+      <li>Go to Settings → Pages. Choose branch <code>main</code> and folder <code>/ (root)</code>, save.</li>
+      <li>Add the DNS records at your domain registrar (see README.md for exact IPs) and keep the <code>CNAME</code> file in the repo.</li>
+    </ol>
+
+    <h3>Notes</h3>
+    <ul>
+      <li>Anyone can view and download files from the dashboard. Only repo admins can upload files via GitHub.</li>
+      <li>If you prefer scripted or token-based uploads, we can add an optional client-side uploader that uses a temporary Personal Access Token — contact me to enable.</li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <div><a href="/">Back to dashboard</a></div>
+  </footer>
+</body>
+</html>

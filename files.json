@@ -1,0 +1,13 @@
+{
+  "files": [
+    {
+      "id": "demo-file-1",
+      "filename": "uploads/demo.txt",
+      "displayName": "Demo: Welcome.txt",
+      "readme": "Welcome to ABHINAV TOOLS AND BOTS!\n\nThis is a demo file. Upload your files into the uploads/ folder and add an entry to files.json.\n\nUse the Admin page for step-by-step instructions.",
+      "url": "https://raw.githubusercontent.com/abhinavkanni6-tech/ABHINAV-TOOLS/main/uploads/demo.txt",
+      "uploaded_at": "2026-07-17T12:00:00Z",
+      "uploader": "admin"
+    }
+  ]
+}

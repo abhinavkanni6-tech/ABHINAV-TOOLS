@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ABHINAV TOOLS AND BOTS</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>ABHINAV TOOLS AND BOTS</h1>
+      <p class="tag">A colourful dashboard to browse, read and download shared tools</p>
+      <div class="actions">
+        <input id="search" placeholder="Search files..." aria-label="Search files">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="grid" class="grid"></section>
+  </main>
+
+  <footer class="footer">
+    <div>Hosted on GitHub Pages · Repo: <a id="repo-link" href="https://github.com/abhinavkanni6-tech/ABHINAV-TOOLS">abhinavkanni6-tech/ABHINAV-TOOLS</a></div>
+    <div>Admin uploads via GitHub web UI — see <a href="/admin.html">Admin instructions</a></div>
+  </footer>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="close-modal" class="btn-close">✕</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-body" class="readme"></div>
+      <a id="modal-download" class="btn primary" target="_blank" rel="noopener">Download</a>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
